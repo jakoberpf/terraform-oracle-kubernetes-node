@@ -1,5 +1,7 @@
 - name: caddy-install
   hosts: all
+  vars:
+    ansible_port: 2222
   become: true
   roles:
     - role: caddy_ansible.caddy_ansible

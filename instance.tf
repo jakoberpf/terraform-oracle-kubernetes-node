@@ -22,6 +22,7 @@ resource "oci_core_instance" "this" {
     skip_source_dest_check = true
     nsg_ids = [
       oci_core_network_security_group.this_ping.id,
+      oci_core_network_security_group.ssh.id,
       oci_core_network_security_group.this_http.id,
       oci_core_network_security_group.this_https.id,
       oci_core_network_security_group.this_kube.id,
@@ -33,11 +34,7 @@ resource "oci_core_instance" "this" {
     user_data = base64encode(templatefile("${path.module}/templates/cloud-init.tpl",
       {
         ssh_authorized_keys = var.ssh_authorized_keys
-        iptables_input_accept = [ 
-          22, 2222, # SSH
-          80, 443, # HTTP/HTTPS
-          6443,  
-        ]
+        ssh_custom_port = 2222
       }
     ))
   }
@@ -49,6 +46,7 @@ resource "null_resource" "ansible" {
 
     connection {
       host = oci_core_instance.this.public_ip
+      port = 2222
       user = "ubuntu"
       private_key = "${file("${path.module}/../../../../.ssh/automation")}"
     }
