@@ -19,7 +19,6 @@
         protocol: tcp
         destination_ports:
           - 22 # teleport
-          - 2222 # ssh
           - 80 # http
           - 443 # https
           - 6443 # kubernetes
