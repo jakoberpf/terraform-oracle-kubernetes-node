@@ -23,6 +23,11 @@ variable "instance_ocpus" {
   default = 1
 }
 
+variable "instance_image" {
+  type    = string
+  default = "default"
+}
+
 variable "vcn_id" {
   type = string
 }
