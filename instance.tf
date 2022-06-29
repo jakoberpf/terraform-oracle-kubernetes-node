@@ -34,7 +34,7 @@ resource "oci_core_instance" "this" {
     user_data = base64encode(templatefile("${path.module}/templates/cloud-init.tpl",
       {
         ssh_authorized_keys = var.ssh_authorized_keys
-        ssh_custom_port     = 2222
+        ssh_custom_port     = var.ssh_custom_port
       }
     ))
   }
@@ -46,7 +46,7 @@ resource "null_resource" "ansible" {
 
     connection {
       host        = oci_core_instance.this.public_ip
-      port        = 2222
+      port        = var.ssh_custom_port
       user        = "ubuntu"
       private_key = file("${path.module}/../../../../.ssh/automation")
     }

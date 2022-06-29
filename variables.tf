@@ -47,3 +47,8 @@ variable "availability_domain" {
 variable "ssh_authorized_keys" {
   type = string
 }
+
+variable "ssh_custom_port" {
+  type = number
+  default = 2222
+}
