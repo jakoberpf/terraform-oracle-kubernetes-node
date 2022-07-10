@@ -10,17 +10,17 @@ variable "compartment" {
 
 variable "instance_shape" {
   type    = string
-  default = "VM.Standard.E2.1.Micro"
+  default = "VM.Standard.A1.Flex" # "VM.Standard.E2.1.Micro"
 }
 
 variable "instance_memory" {
   type    = number
-  default = 1
+  default = 24
 }
 
 variable "instance_ocpus" {
   type    = string
-  default = 1
+  default = 4
 }
 
 variable "instance_image" {

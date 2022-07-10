@@ -4,15 +4,15 @@ resource "oci_core_instance" "this" {
   display_name        = "${var.name}-${var.compartment}-${random_string.deployment_id.result}"
   shape               = var.instance_shape
 
-  # shape_config {
-  #   memory_in_gbs = var.instance_memory
-  #   ocpus         = var.instance_ocpus
-  # }
+  shape_config {
+    memory_in_gbs = var.instance_memory
+    ocpus         = var.instance_ocpus
+  }
 
   source_details {
     source_id               = var.instance_image != "default" ? var.instance_image : data.oci_core_images.this.images.0.id
     source_type             = "image"
-    boot_volume_size_in_gbs = 50
+    boot_volume_size_in_gbs = 150
   }
 
   create_vnic_details {
