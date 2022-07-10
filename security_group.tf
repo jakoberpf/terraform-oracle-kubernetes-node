@@ -122,3 +122,20 @@ resource "oci_core_network_security_group_security_rule" "this_kube" {
     }
   }
 }
+
+resource "oci_core_network_security_group_security_rule" "this_etcd" {
+  network_security_group_id = oci_core_network_security_group.this_kube.id
+
+  description = "ETCD"
+  direction   = "INGRESS"
+  protocol    = 6
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 2379
+      max = 2380
+    }
+  }
+}
