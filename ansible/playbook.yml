@@ -3,15 +3,15 @@
   vars:
     ansible_port: 2222
   become: true
-  roles:
-    - role: caddy_ansible.caddy_ansible
-      caddy_systemd_capabilities_enabled: true
-      caddy_packages: [
-        "github.com/caddy-dns/cloudflare"
-      ]
-      caddy_config: |
-        http://localhost:80
-        respond "Hello, world!"
+  # roles:
+  #   - role: caddy_ansible.caddy_ansible
+  #     caddy_systemd_capabilities_enabled: true
+  #     caddy_packages: [
+  #       "github.com/caddy-dns/cloudflare"
+  #     ]
+  #     caddy_config: |
+  #       http://localhost:80
+  #       respond "Hello, world!"
   tasks:
     - name: Allow connections on multiple ports
       ansible.builtin.iptables:
