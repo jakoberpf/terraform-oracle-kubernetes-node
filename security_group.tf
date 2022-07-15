@@ -1,11 +1,11 @@
-resource "oci_core_network_security_group" "this_ping" {
+resource "oci_core_network_security_group" "ping" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
   display_name   = "${var.name}-ping-security-group-${random_string.deployment_id.result}"
 }
 
-resource "oci_core_network_security_group_security_rule" "this_ping" {
-  network_security_group_id = oci_core_network_security_group.this_ping.id
+resource "oci_core_network_security_group_security_rule" "ping" {
+  network_security_group_id = oci_core_network_security_group.ping.id
 
   description = "PING"
   direction   = "INGRESS"
@@ -54,14 +54,14 @@ resource "oci_core_network_security_group_security_rule" "ssh" {
   }
 }
 
-resource "oci_core_network_security_group" "this_http" {
+resource "oci_core_network_security_group" "http" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
   display_name   = "${var.name}-http-security-group-${random_string.deployment_id.result}"
 }
 
-resource "oci_core_network_security_group_security_rule" "this_http" {
-  network_security_group_id = oci_core_network_security_group.this_http.id
+resource "oci_core_network_security_group_security_rule" "http" {
+  network_security_group_id = oci_core_network_security_group.http.id
 
   description = "HTTP"
   direction   = "INGRESS"
@@ -77,14 +77,14 @@ resource "oci_core_network_security_group_security_rule" "this_http" {
   }
 }
 
-resource "oci_core_network_security_group" "this_https" {
+resource "oci_core_network_security_group" "https" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
   display_name   = "${var.name}-https-security-group-${random_string.deployment_id.result}"
 }
 
-resource "oci_core_network_security_group_security_rule" "this_https" {
-  network_security_group_id = oci_core_network_security_group.this_https.id
+resource "oci_core_network_security_group_security_rule" "https" {
+  network_security_group_id = oci_core_network_security_group.https.id
 
   description = "HTTPS"
   direction   = "INGRESS"
@@ -100,16 +100,16 @@ resource "oci_core_network_security_group_security_rule" "this_https" {
   }
 }
 
-resource "oci_core_network_security_group" "this_kube" {
+resource "oci_core_network_security_group" "kubernetes" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
   display_name   = "${var.name}-kube-security-group-${random_string.deployment_id.result}"
 }
 
-resource "oci_core_network_security_group_security_rule" "this_kube" {
-  network_security_group_id = oci_core_network_security_group.this_kube.id
+resource "oci_core_network_security_group_security_rule" "kube_api" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
 
-  description = "KUBE"
+  description = "KUBE_API"
   direction   = "INGRESS"
   protocol    = 6
   source_type = "CIDR_BLOCK"
@@ -124,7 +124,7 @@ resource "oci_core_network_security_group_security_rule" "this_kube" {
 }
 
 resource "oci_core_network_security_group_security_rule" "this_etcd" {
-  network_security_group_id = oci_core_network_security_group.this_kube.id
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
 
   description = "ETCD"
   direction   = "INGRESS"

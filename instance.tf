@@ -21,11 +21,11 @@ resource "oci_core_instance" "this" {
     hostname_label         = "${var.name}-${var.compartment}-${random_string.deployment_id.result}"
     skip_source_dest_check = true
     nsg_ids = [
-      oci_core_network_security_group.this_ping.id,
+      oci_core_network_security_group.ping.id,
       oci_core_network_security_group.ssh.id,
-      oci_core_network_security_group.this_http.id,
-      oci_core_network_security_group.this_https.id,
-      oci_core_network_security_group.this_kube.id,
+      oci_core_network_security_group.http.id,
+      oci_core_network_security_group.https.id,
+      oci_core_network_security_group.kubernetes.id,
     ]
   }
 
