@@ -25,3 +25,8 @@
           - 6443 # kubernetes
         jump: ACCEPT
         flush: yes
+    - name: Upgrade all apt packages
+      apt: upgrade=dist force_apt_get=yes
+    - name: Check if a reboot is needed for Debian and Ubuntu boxes
+      register: reboot_required_file
+      stat: path=/var/run/reboot-required get_md5=no
