@@ -20,6 +20,7 @@
         destination_ports:
           - 22 # teleport
           - 80 # http
+          - 179 # calico
           - 443 # https
           - 6443 # kubernetes
         jump: ACCEPT

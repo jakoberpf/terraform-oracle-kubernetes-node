@@ -139,3 +139,20 @@ resource "oci_core_network_security_group_security_rule" "this_etcd" {
     }
   }
 }
+
+resource "oci_core_network_security_group_security_rule" "calico" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "CALICO"
+  direction   = "INGRESS"
+  protocol    = 6
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 179
+      max = 179
+    }
+  }
+}
