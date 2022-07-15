@@ -13,7 +13,7 @@
   #       http://localhost:80
   #       respond "Hello, world!"
   tasks:
-    - name: Allow connections on multiple ports
+    - name: Allow tpc connections on relevant ports
       ansible.builtin.iptables:
         chain: INPUT
         protocol: tcp
