@@ -25,7 +25,7 @@ resource "oci_core_instance" "this" {
       oci_core_network_security_group.ssh.id,
       oci_core_network_security_group.http.id,
       oci_core_network_security_group.https.id,
-      oci_core_network_security_group.kubernetes.id,
+      oci_core_network_security_group.kubernetes.id
     ]
   }
 
