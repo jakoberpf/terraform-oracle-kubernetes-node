@@ -106,6 +106,57 @@ resource "oci_core_network_security_group" "kubernetes" {
   display_name   = "${var.name}-kube-security-group-${random_string.deployment_id.result}"
 }
 
+resource "oci_core_network_security_group_security_rule" "local_dns_cache_tcp" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "LOCAL_DNS_CACHE_TCP"
+  direction   = "INGRESS"
+  protocol    = 6
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 53
+      max = 53
+    }
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "local_dns_cache_udp" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "LOCAL_DNS_CACHE_UPD"
+  direction   = "INGRESS"
+  protocol    = 17
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  udp_options {
+    destination_port_range {
+      min = 53
+      max = 53
+    }
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "etcd" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "ETCD"
+  direction   = "INGRESS"
+  protocol    = 6
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 2379
+      max = 2380
+    }
+  }
+}
+
 resource "oci_core_network_security_group_security_rule" "kube_api" {
   network_security_group_id = oci_core_network_security_group.kubernetes.id
 
@@ -123,10 +174,10 @@ resource "oci_core_network_security_group_security_rule" "kube_api" {
   }
 }
 
-resource "oci_core_network_security_group_security_rule" "this_etcd" {
+resource "oci_core_network_security_group_security_rule" "kubelet" {
   network_security_group_id = oci_core_network_security_group.kubernetes.id
 
-  description = "ETCD"
+  description = "KUBELET"
   direction   = "INGRESS"
   protocol    = 6
   source_type = "CIDR_BLOCK"
@@ -134,16 +185,16 @@ resource "oci_core_network_security_group_security_rule" "this_etcd" {
 
   tcp_options {
     destination_port_range {
-      min = 2379
-      max = 2380
+      min = 10250
+      max = 10250
     }
   }
 }
 
-resource "oci_core_network_security_group_security_rule" "calico" {
+resource "oci_core_network_security_group_security_rule" "calico_bgp" {
   network_security_group_id = oci_core_network_security_group.kubernetes.id
 
-  description = "CALICO"
+  description = "CALICO_BGP"
   direction   = "INGRESS"
   protocol    = 6
   source_type = "CIDR_BLOCK"
@@ -153,6 +204,40 @@ resource "oci_core_network_security_group_security_rule" "calico" {
     destination_port_range {
       min = 179
       max = 179
+    }
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "cilium_health_checks" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "CILIUM_HEALTH_CHECKS"
+  direction   = "INGRESS"
+  protocol    = 6
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 4240
+      max = 4240
+    }
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "cilium_vxlan_overlay" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "CILIUM_VXLAN_OVERLAY"
+  direction   = "INGRESS"
+  protocol    = 17
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  udp_options {
+    destination_port_range {
+      min = 8472
+      max = 8472
     }
   }
 }
