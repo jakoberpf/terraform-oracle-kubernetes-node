@@ -1,0 +1,41 @@
+{
+    "logging": {
+        "sink": {
+            "writer": { "output": "stdout" }
+        },
+        "logs": {
+            "": {
+                "writer": { "output": "stdout" },
+                "level": "debug"
+            }
+        }
+    },
+    "apps": {
+        "layer4": {
+            "servers": {
+                "https": {
+                    "listen": [":443"],
+                    "routes": [{
+                        "match": [{ "tls": {} }],
+                        "handle": [{
+                            "handler": "subroute",
+                            "routes": [{
+                                    "match": [{ "tls": { "sni": ["teleport.erpf.de"] } }],
+                                    "handle": [{ "handler": "proxy", "upstreams": [{ "dial": ["localhost:30443"] }] }]
+                                },
+                                {
+                                    "match": [{ "tls": { "sni": ["vaultwarden.test.erpf.de"] } }],
+                                    "handle": [{ "handler": "proxy", "upstreams": [{ "dial": ["localhost:30443"] }] }]
+                                },
+                                {
+                                    "match": [{ "tls": { "sni": ["kubespray.erpf.de"] } }],
+                                    "handle": [{ "handler": "proxy", "upstreams": [{ "dial": ["localhost:30443"] }] }]
+                                }
+                            ]
+                        }]
+                    }]
+                }
+            }
+        }
+    }
+}
