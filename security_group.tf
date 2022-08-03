@@ -241,3 +241,21 @@ resource "oci_core_network_security_group_security_rule" "cilium_vxlan_overlay" 
     }
   }
 }
+
+resource "oci_core_network_security_group_security_rule" "haproxy_stats" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "HAPROXY_STATS"
+  direction   = "INGRESS"
+  protocol    = 6
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  tcp_options {
+    destination_port_range {
+      min = 1936
+      max = 1936
+    }
+  }
+}
+
