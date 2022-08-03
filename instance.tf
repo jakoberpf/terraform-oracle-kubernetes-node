@@ -38,6 +38,12 @@ resource "oci_core_instance" "this" {
       }
     ))
   }
+
+  lifecycle {
+    ignore_changes = [
+      source_details
+    ]
+  }
 }
 
 resource "null_resource" "ansible" {
