@@ -4,14 +4,14 @@
     ansible_port: 2222
   become: true
   # roles:
-  #   - role: caddy_ansible.caddy_ansible # https://github.com/caddy-ansible/caddy-ansible https://codepen.io/1832Manaswini/pen/Vwezyjx
+  #   - role: caddy_ansible.caddy_ansible
   #     caddy_systemd_capabilities_enabled: true
   #     caddy_packages: [
   #       "github.com/caddy-dns/cloudflare",
   #       "github.com/mholt/caddy-l4"
   #     ]
   #     caddy_conf_filename: config.json
-  #     caddy_config: "{{ lookup('template', 'templates/caddy.config.json') }}"
+  #     caddy_config: "{{ lookup('template', 'templates/caddy.json') }}"
   tasks:
     - name: Install HAProxy
       apt:
