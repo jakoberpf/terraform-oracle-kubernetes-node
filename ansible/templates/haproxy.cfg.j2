@@ -68,7 +68,7 @@ backend istiohttp
     balance roundrobin
     timeout connect 10s
     timeout server 1m
-    server local 127.0.0.1:30080 check
+    server local {{ haproxy_own_ip }}:30080 check
 
 backend gatewayhttps
     mode tcp
@@ -86,7 +86,7 @@ backend istiohttps
     balance roundrobin
     timeout connect 10s
     timeout server 1m
-    server local 127.0.0.1:30443 check
+    server local {{ haproxy_own_ip }}:30443 check
 
 listen stats 
     bind            :1936

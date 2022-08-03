@@ -59,7 +59,7 @@ resource "null_resource" "ansible" {
   }
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${oci_core_instance.this.public_ip},' --user ubuntu --private-key ../.ssh/automation -T 300 ${path.module}/ansible/playbook.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i '${oci_core_instance.this.public_ip},' --user ubuntu --private-key ../.ssh/automation -T 300 ${path.module}/ansible/playbook.yml --extra-vars 'haproxy_own_ip=${oci_core_instance.this.private_ip}'"
   }
 
   triggers = {
