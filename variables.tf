@@ -10,7 +10,7 @@ variable "compartment" {
 
 variable "instance_shape" {
   type    = string
-  default = "VM.Standard.A1.Flex" # "VM.Standard.E2.1.Micro"
+  default = "VM.Standard.A1.Flex"
 }
 
 variable "instance_memory" {
