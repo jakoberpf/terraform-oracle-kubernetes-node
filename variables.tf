@@ -28,6 +28,26 @@ variable "instance_image" {
   default = "default"
 }
 
+variable "security_group_ports_kubernetes" {
+  type = map(object({
+    port_min    = number
+    port_max    = number
+    protocol    = number
+    description = string
+  }))
+  default = {}
+}
+
+variable "security_group_ports_applications" {
+  type = map(object({
+    port_min    = number
+    port_max    = number
+    protocol    = number
+    description = string
+  }))
+  default = {}
+}
+
 variable "vcn_id" {
   type = string
 }
@@ -49,6 +69,6 @@ variable "ssh_authorized_keys" {
 }
 
 variable "ssh_custom_port" {
-  type = number
+  type    = number
   default = 2222
 }
