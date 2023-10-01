@@ -39,9 +39,21 @@ resource "oci_core_instance" "this" {
     ))
   }
 
+  # connection {
+  #   host        = self.public_ip
+  #   port        = var.ssh_custom_port
+  #   user        = "ubuntu"
+  #   private_key = file("${path.module}/../../../../.ssh/automation")
+  # }
+
   lifecycle {
     ignore_changes = [
       source_details
     ]
   }
+
+  # provisioner "remote-exec" {
+  #   when = "destroy"
+  #   inline = ["timeout 60 kubectl drain --ignore-daemonsets --delete-emptydir-data "${var.name}""]
+  # }
 }
