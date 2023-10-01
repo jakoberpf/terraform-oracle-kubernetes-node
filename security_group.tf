@@ -14,6 +14,8 @@ resource "oci_core_network_security_group_security_rule" "ping" {
   source      = "0.0.0.0/0"
 }
 
+# SSH port
+
 resource "oci_core_network_security_group" "ssh" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
@@ -54,6 +56,8 @@ resource "oci_core_network_security_group_security_rule" "ssh" {
   }
 }
 
+# HTTP port
+
 resource "oci_core_network_security_group" "http" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
@@ -77,6 +81,8 @@ resource "oci_core_network_security_group_security_rule" "http" {
   }
 }
 
+# HTTPS port
+
 resource "oci_core_network_security_group" "https" {
   compartment_id = var.compartment_id
   vcn_id         = var.vcn_id
@@ -99,6 +105,8 @@ resource "oci_core_network_security_group_security_rule" "https" {
     }
   }
 }
+
+# Kubernetes related ports
 
 resource "oci_core_network_security_group" "kubernetes" {
   compartment_id = var.compartment_id
