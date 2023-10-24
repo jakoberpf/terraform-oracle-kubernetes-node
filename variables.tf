@@ -28,6 +28,11 @@ variable "instance_image" {
   default = "default"
 }
 
+variable "boot_volume_size_in_gbs" {
+  type    = number
+  default = 200
+}
+
 variable "security_group_ports_kubernetes" {
   type = map(object({
     port_min    = number
