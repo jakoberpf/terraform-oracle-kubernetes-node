@@ -201,3 +201,27 @@ resource "oci_core_network_security_group_security_rule" "fix_cilium_vxlan_overl
     }
   }
 }
+
+# "WIREGUARD" = {
+#   port_max    = 51820
+#   port_min    = 51820
+#   protocol    = 17
+#   description = "WIREGUARD"
+# }
+
+resource "oci_core_network_security_group_security_rule" "fix_wireguard" {
+  network_security_group_id = oci_core_network_security_group.kubernetes.id
+
+  description = "WIREGUARD"
+  direction   = "INGRESS"
+  protocol    = 17
+  source_type = "CIDR_BLOCK"
+  source      = "0.0.0.0/0"
+
+  udp_options {
+    destination_port_range {
+      min = 51820
+      max = 51820
+    }
+  }
+}
